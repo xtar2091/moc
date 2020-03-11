@@ -1,0 +1,16 @@
+{
+    "moc": [
+        {
+            "path": "/user/login",
+            "method": "post",
+            "sleep": 5000,
+            "rules": [
+                {
+                    "body": ".*",
+                    "request": ".*",
+                    "response": "ccc"
+                }
+            ]
+        }
+    ]
+}
