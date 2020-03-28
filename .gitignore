@@ -16,4 +16,6 @@
 .idea
 .bin
 .pkg
+bin/*
+pkg/*
 go.sum
