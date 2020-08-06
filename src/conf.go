@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"path/filepath"
 	"strings"
 )
@@ -10,6 +11,7 @@ import (
 type Conf struct {
 	// moc规则集
 	Moc []Moc `json:"moc"`
+	Port int `json:"port"`
 	// 非必填。指定root_path后，response_file、response_shell 可使用相对路径
 	RootPath string `json:"root_path"`
 }
@@ -43,14 +45,16 @@ var GlobalConf map[string]Moc
 func InitConf(confPath string) {
 	content, err := ioutil.ReadFile(confPath)
 	if err != nil {
-		panic(err)
+		log.Fatalln("read conf file failed, conf file:", confPath, ", error:", err)
 	}
 
 	conf := Conf{}
 	err = json.Unmarshal(content, &conf)
 	if err != nil {
-		panic(err)
+		log.Fatalln("parse conf file to json failed, conf file:", confPath, ", error:", err)
 	}
+
+	CommandLineInfo.Port = conf.Port
 
 	fs := FileSystem{}
 	GlobalConf = make(map[string]Moc)
