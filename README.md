@@ -31,10 +31,15 @@ moc --port=9008 --conf=conf.json
 }
 ```
 
+| 字段 | 必填 | 说明 |
+| ---  | --- |  --- |
+| root_path | 否 | 指定root_path后，response_file、response_shell 可使用相对路径 |
+| moc | 是 | moc规则集 |
+
 字段说明
 
-| 字段   | 必填 | 说明                                   |
-| ------ | ---- | -------------------------------------- |
+| 字段 | 必填 | 说明 |
+| --- | --- | --- |
 | path   | 是   | url的path部分                          |
 | method | 是   | 请求的方法                             |
 | slee   | 否   | 休眠一段时间再向客户端返回，单位：毫秒 |
@@ -42,13 +47,27 @@ moc --port=9008 --conf=conf.json
 
 rules字段说明
 
-| 字段     | 必填 | 说明                                                         |
-| -------- | ---- | ------------------------------------------------------------ |
-| body     | 否   | post请求body正则表达式，若不填或为空视为匹配成功             |
-| request  | 否   | 查询字符串正则表达式，url"?"后面的内容，若不填或为空视为匹配成功 |
-| response | 是   | 返回的响应数据                                               |
+|字段|必填|说明|
+|---|---|---|
+|body    |否|post请求body正则表达式，若不填或为空视为匹配成功|
+|request |否|查询字符串正则表达式，url"?"后面的内容，若不填或为空视为匹配成功|
+|response|否|返回的响应数据|
+|response_file|否|响应返回指定文件中的内容|
+|response_shell|否|获取指定脚本的标准输出并返回|
 
 请求的查询字符串、body与给定的正则表达式完全匹配，则返回response指定的内容。
+
+响应字段的优先级为：response > response_file > response_shell
+
+即当三个字段同时存在时
+
+* 若response不为空，则返回response指定的内容
+
+* 若response为空，response_file指定的文件存在，则返回该文件的内容
+
+* 若response为空，response_file为空或指定的文件不存在，response_shell指定的文件存在，则返回执行该文件的标准输出
+
+* 否则返回空内容
 
 对于一个请求
 

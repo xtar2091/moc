@@ -1,4 +1,5 @@
 {
+    "root_path": "E:\\Code\\mycode\\moc\\response",
     "moc": [
         {
             "path": "/user/login",
@@ -8,7 +9,9 @@
                 {
                     "body": ".*",
                     "request": ".*",
-                    "response": "ccc"
+                    "response": "ccc",
+                    "response_file": "user_login.json",
+                    "response_shell": "user_login.py"
                 }
             ]
         }
