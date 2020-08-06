@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"os/exec"
+	"path/filepath"
 	"regexp"
 )
 
@@ -59,5 +61,14 @@ func (obj RulesFilter) readResponseFromFile(fileName string) string {
 }
 
 func (obj RulesFilter) readResponseFromShell(fileName string) string {
-	return ""
+	ext := filepath.Ext(fileName)
+	if ext == ".py" {
+		cmd := exec.Command("python", fileName)
+		buf, err := cmd.Output()
+		if err != nil {
+			return "welcome to moc"
+		}
+		return string(buf)
+	}
+	return "welcome to moc"
 }
