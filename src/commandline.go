@@ -1,6 +1,8 @@
 package main
 
-import "flag"
+import (
+	"flag"
+)
 
 type CommandLine struct {
 	ConfPath string

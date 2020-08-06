@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"path/filepath"
 	"strings"
@@ -80,6 +79,5 @@ func InitConf(confPath string) {
 
 func MakeMocKey(method, path string) string {
 	key := strings.ToLower(method) + strings.ToLower(path)
-	fmt.Println("moc method:", method, ", path:", path)
 	return key
 }
