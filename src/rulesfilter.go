@@ -27,7 +27,7 @@ func (obj RulesFilter) DoFilter(queryString, body string, rules []Rules) string 
 				rep = obj.readResponseFromFile(rule.ResponseFile)
 				log.Println("response from file:", rule.ResponseFile)
 			} else if len(rule.ResponseShell) > 0 {
-				rep = obj.readResponseFromShell(rule.ResponseShell)
+				rep = obj.readResponseFromShell(rule.ResponseShell, queryString, body)
 				log.Println("response from shell:", rule.ResponseShell)
 			}
 			break
@@ -65,10 +65,10 @@ func (obj RulesFilter) readResponseFromFile(fileName string) string {
 	return string(rep)
 }
 
-func (obj RulesFilter) readResponseFromShell(fileName string) string {
-	ext := filepath.Ext(fileName)
+func (obj RulesFilter) readResponseFromShell(shellFileName, queryString, body string) string {
+	ext := filepath.Ext(shellFileName)
 	if ext == ".py" {
-		cmd := exec.Command("python", fileName)
+		cmd := exec.Command("python", shellFileName, queryString, body)
 		buf, err := cmd.Output()
 		if err != nil {
 			log.Println("read shell output failed, error:", err)
@@ -76,6 +76,6 @@ func (obj RulesFilter) readResponseFromShell(fileName string) string {
 		}
 		return string(buf)
 	}
-	log.Println("unsupported shell:", fileName)
+	log.Println("unsupported shell:", shellFileName)
 	return "welcome to moc"
 }
