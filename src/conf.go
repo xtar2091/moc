@@ -13,7 +13,7 @@ type Conf struct {
 	Moc []Moc `json:"moc"`
 	Port int `json:"port"`
 	// 非必填。指定root_path后，response_file、response_shell 可使用相对路径
-	RootPath string `json:"root_path"`
+	ResponseRootPath string `json:"response_root_path"`
 }
 
 type Rules struct {
@@ -60,7 +60,7 @@ func InitConf(confPath string) {
 	GlobalConf = make(map[string]Moc)
 	for _, moc := range conf.Moc {
 		for i := 0; i < len(moc.Rules); i++ {
-			file := filepath.Join(conf.RootPath, moc.Rules[i].ResponseFile)
+			file := filepath.Join(conf.ResponseRootPath, moc.Rules[i].ResponseFile)
 			file = filepath.Clean(file)
 			if fs.IsFile(file) == true {
 				moc.Rules[i].ResponseFile = file
@@ -68,7 +68,7 @@ func InitConf(confPath string) {
 				moc.Rules[i].ResponseFile = ""
 			}
 
-			file = filepath.Join(conf.RootPath, moc.Rules[i].ResponseShell)
+			file = filepath.Join(conf.ResponseRootPath, moc.Rules[i].ResponseShell)
 			file = filepath.Clean(file)
 			if fs.IsFile(file) == true {
 				moc.Rules[i].ResponseShell = file

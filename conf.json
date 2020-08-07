@@ -1,6 +1,6 @@
 {
     "port": 8017,
-    "root_path": "E:\\Code\\mycode\\moc\\response",
+    "response_root_path": "/home/my_user/moc/response",
     "moc": [
         {
             "path": "/user/login",
